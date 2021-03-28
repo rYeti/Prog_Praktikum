@@ -44,7 +44,7 @@ class Lok {
      * 1. Eine Methode, die bei einem Zug den ersten Wagon entnimmt und als R
      * ̈uckgabewert zur ̈uckliefert if(wagon.nr == 1) wagon.paint(posx+lenght*2,
      * posy, green); 2. Eine Methode, die bei einem Zug den letzten Wagon abkoppelt
-     * und als R ̈uckgabewert zur ̈uckliefert. if(wagon.next == null)
+     * und als R ̈uckgabewert zur ̈uckliefert. if(wagon.next == null)d
      * 
      */
 }
