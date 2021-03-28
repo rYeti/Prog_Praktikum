@@ -1,5 +1,3 @@
-import java.util.Random;
-
 class QuickSort {
     public static void main(String args[]) {
         Liste4Sort theList = new Liste4Sort();
