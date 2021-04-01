@@ -12,25 +12,24 @@ public class Maus extends Tier {
 
     @Override
     void paint(int b, int h, String file) {
-        // TODO Auto-generated method stub
         super.paint(b, h, file);
     }
 
     @Override
     void fortbewegung() {
-        // TODO Auto-generated method stub
-        super.fortbewegung();
+
+        System.out.println("Vierbeiner: " + getClass().getSimpleName());
     }
 
     @Override
     void versteandigung() {
-        // TODO Auto-generated method stub
-        super.versteandigung();
+        
+        System.out.println("verseandigungmethode von " + getClass().getSimpleName());
     }
 
     @Override
     void liebligsbeutetier() {
-        // TODO Auto-generated method stub
-        super.liebligsbeutetier();
+        
+        System.out.println(getClass().getSimpleName() + " hat kein Beutetier");
     }
 }

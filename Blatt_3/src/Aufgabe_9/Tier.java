@@ -13,6 +13,7 @@ public class Tier {
     int aqurium;
 
     void paint(int b, int h, String file) {
+        
         addPicture(posx, posy, b, h, file);
     }
 
