@@ -33,29 +33,31 @@ class Lok {
   }
 
   void swap(int a, int b) {
-    if(a == b) return;
+    if (a == b)
+      return;
 
     Wagon findA = null, aPointer = wagons;
-    while(aPointer != null && aPointer.wgNr != a) {
+    while (aPointer != null && aPointer.wgNr != a) {
       findA = aPointer;
       aPointer = aPointer.next;
     }
 
     Wagon findB = null, bPointer = wagons;
-    while(bPointer != null && bPointer.wgNr != b) {
+    while (bPointer != null && bPointer.wgNr != b) {
       findB = bPointer;
       bPointer = bPointer.next;
     }
 
-    if(aPointer == null && bPointer == null) return;
+    if (aPointer == null && bPointer == null)
+      return;
 
-    if(findA != null) {
+    if (findA != null) {
       findA.next = bPointer;
     } else {
       wagons = bPointer;
     }
 
-    if(findB != null) {
+    if (findB != null) {
       findB.next = aPointer;
     } else {
       wagons = aPointer;
@@ -67,7 +69,56 @@ class Lok {
   }
 
   void swapInhhalt(int a, int b) {
+    if (a == b)
+      return;
+
+    Wagon aPointer = wagons;
+    while (aPointer != null && aPointer.wgNr != a) {
+      aPointer = aPointer.next;
+    }
+
+    Wagon bPointer = wagons;
+    while (bPointer != null && bPointer.wgNr != b) {
+      bPointer = bPointer.next;
+    }
+
+    if (aPointer == null && bPointer == null)
+      return;
+
+    int temp = aPointer.wgNr;
+    aPointer.wgNr = bPointer.wgNr;
+    bPointer.wgNr = temp;
   }
+
+  int shortest(int st) {
+    while (wagons != null && wagons.wgNr != st) {
+      wagons = wagons.next;
+    }
+    if (wagons == null)
+      return -1;
+    Wagon sht = wagons;
+    int min = sht.lge;
+    Wagon loca = sht;
+    while (sht != null) {
+      if (min > sht.lge) {
+        min = sht.lge;
+        loca = sht;
+      }
+      sht = sht.next;
+    }
+    return loca.wgNr;
+  }
+
+  void swapShortestLinear(){
+    for(int i = 0; shortest(i+1) > 0; i++) {
+      swap(i, shortest(i));
+    }
+  }  
+
+  boolean checkXyz() {
+    return false;
+  }
+
 }
 
 class Wagon {
@@ -146,7 +197,11 @@ public class Eisenbahn {
     l.swap(2, 5);
     l.paint();
     initWindow();
-    l.swapInhhalt(4, 1);
+    l.swapInhhalt(4, 2);
+    l.paint();
+    System.out.println(l.shortest(9));
+    initWindow();
+    l.swapShortestLinear();
     l.paint();
   }
 }
