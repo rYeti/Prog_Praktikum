@@ -62,7 +62,7 @@ class Lok {
     } else {
       wagons = aPointer;
     }
-
+    
     Wagon temp = aPointer.next;
     aPointer.next = bPointer.next;
     bPointer.next = temp;
@@ -91,40 +91,49 @@ class Lok {
   }
 
   int shortest(int st) {
-    while (wagons != null && wagons.wgNr != st) {
-      wagons = wagons.next;
+    Wagon loca = wagons;
+    while (loca != null && loca.wgNr != st) {
+      loca = loca.next;
     }
-    if (wagons == null)
+    if (loca == null)
       return -1;
-    Wagon sht = wagons;
-    int min = sht.lge;
-    Wagon loca = sht;
-    while (sht != null) {
-      if (min > sht.lge) {
-        min = sht.lge;
-        loca = sht;
+
+    int min = loca.lge;
+    int pos = st;
+    while (loca != null) {
+      if (min > loca.lge) {
+        min = loca.lge;
+        pos = st;
       }
-      sht = sht.next;
+      loca = loca.next;
+      pos++;
     }
-    return loca.wgNr;
+    return pos;
   }
 
-  void swapShortestLinear(){
-    for(int i = 0; shortest(i+1) > 0; i++) {
+  void swapShortestLinear() {
+    for (int i = 0; shortest(i + 1) > 0; i++) {
       swap(i, shortest(i));
     }
-  }  
+  }
 
-  boolean checkXyz() {
-    return false;
+  boolean isSorted() {
+    Wagon h = wagons;
+    while (h != null && h.next != null) {
+      if (h.lge > h.next.lge)
+        return false;
+      h = h.next;
+    }
+    return true;
   }
 
 }
 
-class Wagon {
+abstract class Wagon {
   final int dist = 3, h = 15;
-
+  int gesamtGewicht;
   int lge = (int) (Math.random() * (110 - 20) + 20);
+  int maxGewicht;
 
   static int lfdNr = 1; // Nummer des naechsten Wagons
 
@@ -174,7 +183,7 @@ class Wagon {
     addRectBorder(posx, posy - h, lge, h, col, "" + wgNr);
     addCircleBorder(posx + 3, posy, 8, "black");
     addCircleBorder(posx + lge - 3 - 8, posy, 8, "black");
-    // addText(""+wgNr, posx+3, posy-h/2, 8,"yellow");
+    addText("" + wgNr, posx + 3, posy - h / 2, 8, "yellow");
     if (next != null)
       next.paint(posx + lge + dist, posy);
   }
@@ -185,23 +194,30 @@ public class Eisenbahn {
   public static void main(String a[]) {
     initWindow();
     Lok l = new Lok(10, 50);
-    l.appWagon(new Wagon());
-    l.appWagon(new Wagon());
-    l.appWagon(new Wagon());
-    l.appWagon(new Wagon());
-    l.appWagon(new Wagon());
-    l.appWagon(new Wagon());
-    l.appWagon(new Wagon());
+    l.appWagon(new OffenerGueterwagen());
+    l.appWagon(new Personenwagen());
+    l.appWagon(new Personenwagen());
+    l.appWagon(new Autotranporter());
+    l.appWagon(new OffenerGueterwagen());
+    l.appWagon(new Personenwagen());
+    l.appWagon(new Tankwagen());
     l.paint();
+/*
     initWindow();
     l.swap(2, 5);
     l.paint();
+
     initWindow();
     l.swapInhhalt(4, 2);
     l.paint();
-    System.out.println(l.shortest(9));
+
+    System.out.println(l.isSorted());
+    System.out.println(l.shortest(2));
+*/
     initWindow();
     l.swapShortestLinear();
     l.paint();
+    System.out.println(l.isSorted());
+
   }
 }
